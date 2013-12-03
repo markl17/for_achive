@@ -1,4 +1,4 @@
-<form method="post" action="/controller/submit/">
+
 
 <section>
 	
@@ -34,18 +34,17 @@
     <?php } ?>
 </section>
 <script>
-   $('.tes').click (function(event){
-    var output =$('.output', this);
-    console.log(output);
-	var e = $('.color', this).html();
-	console.log(e);
+
+   $('.color').click(function(event){
+    
+	var output =$(this).siblings('.output');;
+	var e = $(this).html();
 	
 	$.post( "color/color1", {color : e}, function( data ) {
-		output.html(data) + "<a  class='one'>total</a>"
-	;});
-
- 
-
+		var out=data + '<a  href="#" class="one">total</a>'+'<div class="something" style="display:none"></div>';
+		console.log(output);
+		output.html(out);
+	});
     event.stopPropagation();
     if(output.css('display') == 'none'){
         $(".output").hide();
@@ -57,15 +56,16 @@
 
 
 
-
-$('.one').click(function(event){
+$(document).on('click', '.one', function(event){
+//$('.one').click(function(event){
     var total = 0;
     event.stopPropagation();
-    if (this === event.target) {
-        $(this).siblings('span').each(function() {
-            var x = Number($(this).text());
+    
+    $(this).siblings('span').each(function() {
+        var x = Number($(this).text());
             total += x;
-        }); 
+        });
+			
         var output = $(this).siblings(".something");
         output.toggle( ).html(total);
         if(output.css('display') != 'none'){
@@ -74,6 +74,7 @@ $('.one').click(function(event){
         }else{
             output.hide();
         }
-    }
+    
 });
+
 </script>
